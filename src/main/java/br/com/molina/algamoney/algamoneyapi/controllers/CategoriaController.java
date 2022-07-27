@@ -10,8 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -42,9 +45,15 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> saveCategoria(@RequestBody @Valid CategoriaDto categoriaDto){
+    public ResponseEntity<Object> saveCategoria(@RequestBody @Valid CategoriaDto categoriaDto, HttpServletResponse response){
         var categoriaModel = new CategoriaModel();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{codigo}")
+                .buildAndExpand(categoriaModel.getCodigo()).toUri();
+        response.setHeader("Location", uri.toASCIIString());
+
         BeanUtils.copyProperties(categoriaDto, categoriaModel);
-        return ResponseEntity.status(HttpStatus.CREATED).body(categoriaService.save(categoriaModel));
+        return ResponseEntity.created(uri).body(categoriaService.save(categoriaModel));
     }
+
+    
 }
