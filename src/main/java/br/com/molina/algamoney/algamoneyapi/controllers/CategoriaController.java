@@ -22,12 +22,6 @@ import java.util.Optional;
 @RequestMapping("/categorias")
 public class CategoriaController {
 
-    final CategoriaService categoriaService;
-
-    public CategoriaController(CategoriaService categoriaService) {
-        this.categoriaService = categoriaService;
-    }
-
     @Autowired
     CategoriaRepository categoriaRepository;
 
@@ -37,14 +31,13 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> saveCategoria(@RequestBody @Valid CategoriaDto categoriaDto, HttpServletResponse response) {
-        var categoriaModel = new CategoriaModel();
-        BeanUtils.copyProperties(categoriaDto, categoriaModel);
+    public ResponseEntity<CategoriaModel> criar(@Valid @RequestBody CategoriaModel categoria, HttpServletResponse response) {
+        CategoriaModel categoriaSalva = categoriaRepository.save(categoria);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{codigo}")
-                .buildAndExpand(categoriaModel.getCodigo()).toUri();
+                .buildAndExpand(categoriaSalva.getCodigo()).toUri();
         response.setHeader("Location", uri.toASCIIString());
-        return ResponseEntity.created(uri).body(categoriaService.save(categoriaModel));
+        return ResponseEntity.created(uri).body(categoriaSalva);
     }
 
     @GetMapping("/{codigo}")
