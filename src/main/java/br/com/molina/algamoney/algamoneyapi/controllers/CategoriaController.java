@@ -2,10 +2,7 @@ package br.com.molina.algamoney.algamoneyapi.controllers;
 
 
 import br.com.molina.algamoney.algamoneyapi.domain.models.CategoriaModel;
-import br.com.molina.algamoney.algamoneyapi.dtos.CategoriaDto;
 import br.com.molina.algamoney.algamoneyapi.repositories.CategoriaRepository;
-import br.com.molina.algamoney.algamoneyapi.services.CategoriaService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
