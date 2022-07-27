@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import br.com.molina.algamoney.algamoneyapi.domain.models.CategoriaModel;
 
 @Repository
-public interface CategoriaRepository extends JpaRepository<CategoriaModel, UUID>{
+public interface CategoriaRepository extends JpaRepository<CategoriaModel, Long>{
 
 }

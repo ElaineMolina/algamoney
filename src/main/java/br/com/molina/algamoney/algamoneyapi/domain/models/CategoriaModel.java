@@ -5,7 +5,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.UUID;
 
 
 
@@ -19,7 +18,7 @@ public class CategoriaModel implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private UUID codigo;
+	private Long codigo;
 	@Column(nullable = false, unique = true, length = 30)
 	private String nome;
 
