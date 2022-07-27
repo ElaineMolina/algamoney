@@ -43,5 +43,11 @@ public class PessoaController {
         Optional<PessoaModel> pessoa = pessoaRepository.findById(codigo);
         return pessoa.isPresent() ? ResponseEntity.ok(pessoa.get()) : ResponseEntity.notFound().build();
     }
+
+    @DeleteMapping("/{codigo}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void remover(@PathVariable Long codigo){
+        pessoaRepository.deleteById(codigo);
+    }
 }
 
