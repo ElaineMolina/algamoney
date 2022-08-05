@@ -1,10 +1,9 @@
 package br.com.molina.algamoney.algamoneyapi.controllers;
 
-import br.com.molina.algamoney.algamoneyapi.domain.models.PessoaModel;
-import br.com.molina.algamoney.algamoneyapi.event.RecursoCriadoEvent;
+import br.com.molina.algamoney.algamoneyapi.domain.models.Pessoa;
+import br.com.molina.algamoney.algamoneyapi.events.RecursoCriadoEvent;
 import br.com.molina.algamoney.algamoneyapi.repositories.PessoaRepository;
-import br.com.molina.algamoney.algamoneyapi.service.PessoaService;
-import lombok.AllArgsConstructor;
+import br.com.molina.algamoney.algamoneyapi.services.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
@@ -16,12 +15,13 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-@AllArgsConstructor
+
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/pessoas")
 public class PessoaController {
 
+    @Autowired
     private PessoaRepository pessoaRepository;
 
     @Autowired
@@ -31,21 +31,21 @@ public class PessoaController {
     private PessoaService pessoaService;
 
     @GetMapping
-    public List<PessoaModel> listar() {
+    public List<Pessoa> listar() {
         return pessoaRepository.findAll();
     }
 
     @PostMapping
-    public ResponseEntity<PessoaModel> criar(@Valid @RequestBody PessoaModel pessoa, HttpServletResponse response) {
-        PessoaModel pessoaSalva = pessoaRepository.save(pessoa);
+    public ResponseEntity<Pessoa> criar(@Valid @RequestBody Pessoa pessoa, HttpServletResponse response) {
+        Pessoa pessoaSalva = pessoaRepository.save(pessoa);
         publisher.publishEvent(new RecursoCriadoEvent(this, response, pessoaSalva.getCodigo()));
         return ResponseEntity.status(HttpStatus.CREATED).body(pessoaSalva);
     }
 
 
     @GetMapping("/{codigo}")
-    public ResponseEntity<PessoaModel> buscarPeloCodigo(@PathVariable Long codigo) {
-        Optional<PessoaModel> pessoa = pessoaRepository.findById(codigo);
+    public ResponseEntity<Pessoa> buscarPeloCodigo(@PathVariable Long codigo) {
+        Optional<Pessoa> pessoa = pessoaRepository.findById(codigo);
         return pessoa.isPresent() ? ResponseEntity.ok(pessoa.get()) : ResponseEntity.notFound().build();
     }
     @DeleteMapping("/{codigo}")
@@ -55,9 +55,9 @@ public class PessoaController {
     }
 
     @PutMapping("/{codigo}")
-    public ResponseEntity<PessoaModel> atualizar(@PathVariable Long codigo,
-                                                 @Valid @RequestBody PessoaModel pessoa){
-        PessoaModel pessoaSalva = pessoaService.atualizar(codigo,pessoa);
+    public ResponseEntity<Pessoa> atualizar(@PathVariable Long codigo,
+                                            @Valid @RequestBody Pessoa pessoa){
+        Pessoa pessoaSalva = pessoaService.atualizar(codigo,pessoa);
         return ResponseEntity.ok(pessoaSalva);
     }
 

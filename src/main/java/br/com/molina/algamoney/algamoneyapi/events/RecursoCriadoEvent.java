@@ -1,4 +1,4 @@
-package br.com.molina.algamoney.algamoneyapi.event;
+package br.com.molina.algamoney.algamoneyapi.events;
 
 import org.springframework.context.ApplicationEvent;
 

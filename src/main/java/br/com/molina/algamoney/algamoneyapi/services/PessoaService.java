@@ -1,14 +1,12 @@
-package br.com.molina.algamoney.algamoneyapi.service;
+package br.com.molina.algamoney.algamoneyapi.services;
 
 
-import br.com.molina.algamoney.algamoneyapi.domain.models.PessoaModel;
+import br.com.molina.algamoney.algamoneyapi.domain.models.Pessoa;
 import br.com.molina.algamoney.algamoneyapi.repositories.PessoaRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class PessoaService {
@@ -16,24 +14,25 @@ public class PessoaService {
     @Autowired
     private PessoaRepository pessoaRepository;
 
-    public PessoaModel atualizar(Long codigo, PessoaModel pessoa){
-        PessoaModel pessoaSalva = buscarPessoaPeloCodigo(codigo);
+    public Pessoa atualizar(Long codigo, Pessoa pessoa){
+        Pessoa pessoaSalva = buscarPessoaPeloCodigo(codigo);
 
         BeanUtils.copyProperties(pessoa, pessoaSalva,"codigo");
         return pessoaRepository.save(pessoaSalva);
     }
 
     public void atualizarPropriedadeAtivo(Long codigo, Boolean ativo) {
-        PessoaModel pessoaSalva = buscarPessoaPeloCodigo(codigo);
+        Pessoa pessoaSalva = buscarPessoaPeloCodigo(codigo);
         pessoaSalva.setAtivo(ativo);
         pessoaRepository.save(pessoaSalva);
 
     }
-    private PessoaModel buscarPessoaPeloCodigo(Long codigo) {
-        PessoaModel pessoaSalva = pessoaRepository.findById(codigo)
+    private Pessoa buscarPessoaPeloCodigo(Long codigo) {
+        Pessoa pessoaSalva = pessoaRepository.findById(codigo)
                 .orElseThrow(() -> new EmptyResultDataAccessException(1));
 
         return pessoaSalva;
+
     }
 
 }

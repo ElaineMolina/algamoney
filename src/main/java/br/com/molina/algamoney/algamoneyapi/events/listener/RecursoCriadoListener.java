@@ -1,6 +1,6 @@
-package br.com.molina.algamoney.algamoneyapi.event.listener;
+package br.com.molina.algamoney.algamoneyapi.events.listener;
 
-import br.com.molina.algamoney.algamoneyapi.event.RecursoCriadoEvent;
+import br.com.molina.algamoney.algamoneyapi.events.RecursoCriadoEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
