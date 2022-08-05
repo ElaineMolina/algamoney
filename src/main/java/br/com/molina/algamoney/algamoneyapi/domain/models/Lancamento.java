@@ -11,10 +11,10 @@ public class Lancamento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codidgo;
+    private Long codigo;
     private String descricao;
 
-    @Column(name = "data_vancimento")
+    @Column(name = "data_vencimento")
     private LocalDate dataVencimento;
 
     @Column(name = "data_pagamento")
@@ -34,12 +34,12 @@ public class Lancamento {
     @JoinColumn(name = "codigo_pessoa")
     private Pessoa pessoa;
 
-    public Long getCodidgo() {
-        return codidgo;
+    public Long getCodigo() {
+        return codigo;
     }
 
-    public void setCodidgo(Long codidgo) {
-        this.codidgo = codidgo;
+    public void setCodigo(Long codigo) {
+        this.codigo = codigo;
     }
 
     public String getDescricao() {
@@ -107,16 +107,28 @@ public class Lancamento {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Lancamento that = (Lancamento) o;
-        return codidgo.equals(that.codidgo);
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+        return result;
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(codidgo);
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Lancamento other = (Lancamento) obj;
+        if (codigo == null) {
+            if (other.codigo != null)
+                return false;
+        } else if (!codigo.equals(other.codigo))
+            return false;
+        return true;
     }
 }
 
