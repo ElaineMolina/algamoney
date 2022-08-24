@@ -50,13 +50,13 @@ public class PessoaController {
     @DeleteMapping("/{codigo}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void remover(@PathVariable Long codigo){
-        pessoaRepository.deleteById(codigo);
+        this.pessoaRepository.deleteById(codigo);
     }
 
     @PutMapping("/{codigo}")
     public ResponseEntity<Pessoa> atualizar(@PathVariable Long codigo,
                                             @Valid @RequestBody Pessoa pessoa){
-        Pessoa pessoaSalva = pessoaService.atualizar(codigo,pessoa);
+        Pessoa pessoaSalva = pessoaService.atualizar(codigo, pessoa);
         return ResponseEntity.ok(pessoaSalva);
     }
 
