@@ -35,7 +35,6 @@ public class CategoriaController {
         publisher.publishEvent(new RecursoCriadoEvent(this, response, categoriaSalva.getCodigo()));
         return ResponseEntity.status(HttpStatus.CREATED).body(categoriaSalva);
     }
-
     @GetMapping("/{codigo}")
     public ResponseEntity<Categoria> buscarPeloCodigo(@PathVariable Long codigo) {
         Optional<Categoria> categoria = categoriaRepository.findById(codigo);
